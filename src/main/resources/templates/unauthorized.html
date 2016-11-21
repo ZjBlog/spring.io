@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="template/head::head">
+        <title>unauthorized</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <div th:replace="template/navbar::navtabs">
+        </div>
+        <div style="border-bottom:1px solid #dddddd ; height:2px; clear:both;">
+        </div>
+        <div class="container text-center" style="min-height:459px !important; font-size:18px;padding-top:20px;">
+            <shiro:authenticated>
+                <div th:if="${WeiKeUtil.getCurrentUser().getRoles()}==null"  style="text-align:center">
+                    sorry,您目前还没有权限,请到<a style="color:red;" href="/member/profile/index.html">个人中心</a>去认证。
+                </div>
+                <shiro:hasAnyRoles name="ROLE_STUDENT,ROLE_PARENT">
+                     <p th:if="${msg}!=null"  th:text="${msg}" style="text-align:center">  </p>  
+                     <p th:if="${msg}==null" style="text-align:center">  sorry,您没有上传权限。 </p>  
+                   
+                </shiro:hasAnyRoles>
+            </shiro:authenticated>
+        </div>
+        <!-- Footer -->
+        <div th:replace="template/footer::div.footer">
+        </div>
+    </body>
+</html>

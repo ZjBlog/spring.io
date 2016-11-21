@@ -1,0 +1,296 @@
+<!-- 上下页版/前后5页版 -->
+<div th:fragment='pagination'>
+    <div th:if="${pageWrapper}!=null" style="text-align: center">
+        <ul class="pagination pagination-centered">
+            <li th:class="${pageWrapper.isFirst()}? 'disabled' : ''">
+                <span th:if='${pageWrapper.isFirst()}'>首页</span>
+                <a th:if='${not pageWrapper.isFirst()}' th:href='@{${pageWrapper.url}(page=0,keywords=${param.keywords},selectText=${param.selectText})}'>首页</a>
+            </li>
+            <li th:if="${pageWrapper.hasPrevious()}">
+                <a th:if='${pageWrapper.hasPrevious()}' th:href='@{${pageWrapper.url}(page=${pageWrapper.getNumber()-1},keywords=${param.keywords},selectText=${param.selectText})}'>上一页</a>
+            </li>
+            <li th:each='item : ${pageWrapper.getItems()}' th:class="${item == pageWrapper.getNumber()}? 'active' : ''">
+                <span th:if="${item == pageWrapper.getNumber()}" th:text='${item+1}'>当前页码</span>
+                <a th:if="${item != pageWrapper.getNumber()}" th:href='@{${pageWrapper.url}(page=${item},keywords=${param.keywords},selectText=${param.selectText})}' th:text="${item+1}">页码</a>
+            </li>
+            <li th:if="${pageWrapper.hasNext()}">
+                <a th:if='${pageWrapper.hasNext()}' th:href='@{${pageWrapper.url}(page=${pageWrapper.getNumber()+1},keywords=${param.keywords},selectText=${param.selectText})}'>下一页</a>
+            </li>
+            <li th:class="${pageWrapper.isLast()}? 'disabled' : ''">
+                <span th:if='${pageWrapper.isLast()}'>尾页</span>
+                <a th:if='${not pageWrapper.isLast()}' th:href='@{${pageWrapper.url}(page=${pageWrapper.getTotalPages()-1},keywords=${param.keywords},selectText=${param.selectText})}'>尾页</a>
+            </li>
+        </ul>
+    </div>
+    <div th:if="${pageWrapper}==null" style="text-align: center">
+        <ul class="pagination pagination-centered">
+            <li>请使用pageWrapper作为分页对象</li>
+        </ul>
+    </div>
+</div>
+<!-- 前后5页版 -->
+<!--（无居中等样式，如有需要，使用th:replace引用fragment，并添加class="col-xx-offset-x"）
+如：<div th:include="template/pagination::pagination2(${sysMsgPage})" class="col-md-offset-2">
+</div>
+-->
+<div th:fragment='pagination2(page)'>
+    <div th:if="${page.Content.size()}!=0">
+        <ul class="pagination pagination-centered">
+            <li th:if="${page.hasPrevious()}">
+                <a th:href="@{?(page=0)}">首页</a>
+            </li>
+            <li th:classappend="!${page.hasPrevious()}?'disabled':''" th:if="!${page.hasPrevious()}">
+                <a href="#">首页</a>
+            </li>
+            <li th:classappend="!${page.hasPrevious()}?'disabled':''" th:if="${not page.hasPrevious()}">
+                <a class="jp-previous" aria-label="Previous">
+                    <span aria-hidden="true">上一页</span>
+                </a>
+            </li>
+            <li th:if="${page.hasPrevious()}">
+                <a class="jp-previous" th:href="@{?(page=${page.getNumber()}-1)}">上一页</a>
+            </li>
+            <li class="jp-hidden" th:if="${page.getNumber()} -4 >0">
+                <span>...</span>
+            </li>
+            <li th:each="iterationNum : ${'-5,-4,-3,-2,-1,0,1,2,3,4,5'.split(',')}" th:classappend="${page.getNumber()} + ${iterationNum} == ${page.getNumber()}?'active':''">
+                <a th:text="${page.getNumber()} + ${iterationNum} + 1" th:if="${page.getNumber()} + ${iterationNum} >= 0 and ${page.getTotalPages()} > ${page.getNumber()} + ${iterationNum}" th:href="@{?(page=${page.getNumber()}+${iterationNum})}">页码</a>
+            </li>
+            <li class="jp-hidden" th:if="${page.getNumber()} +5 lt ${page.getTotalPages()}">
+                <span>...</span>
+            </li>
+            <li th:if="${page.hasNext()}">
+                <a class="jp-next jp-disabled" th:href="@{?(page=${page.getNumber()}+1)}">下一页</a>
+            </li>
+            <li th:classappend="!${page.hasNext()}?'disabled':''" th:if="${not page.hasNext()}">
+                <a class="jp-next jp-disabled" href="#" aria-label="Next">
+                    <span aria-hidden="true">下一页</span>
+                </a>
+            </li>
+            <li th:if="${page.hasNext()}">
+                <a th:href="@{?(page=${page.getTotalPages()}-1)}">尾页</a>
+            </li>
+            <li th:classappend="!${page.hasNext()}?'disabled':''" th:if="!${page.hasNext()}">
+                <a href="#">尾页</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!--只有前后页版本-->
+<div th:fragment='pagination3(page)'>
+    <div th:if="${page.Content.size()}!=0">
+        <ul class="pagination pagination-centered" style="font-size: 14px; font-family: '微软雅黑'; font-weight: 100px;">
+            <li th:if="${page.hasPrevious()}">
+                <a th:href="@{?(page=0)}">首页</a>
+            </li>
+            <li th:classappend="!${page.hasPrevious()}?'disabled':''" th:if="!${page.hasPrevious()}">
+                <a href="#">首页</a>
+            </li>
+            <li th:classappend="!${page.hasPrevious()}?'disabled':''" th:if="${not page.hasPrevious()}">
+                <a class="jp-previous" aria-label="Previous">
+                    <span aria-hidden="true">上一页</span>
+                </a>
+            </li>
+            <li th:if="${page.hasPrevious()}">
+                <a class="jp-previous" th:href="@{?(page=${page.getNumber()}-1)}">上一页</a>
+            </li>
+            <li class="jp-hidden" th:if="${page.getNumber()} -4 >0">
+                <span>...</span>
+            </li>
+            <li th:each="iterationNum : ${'-5,-4,-3,-2,-1,0,1,2,3,4,5'.split(',')}" th:classappend="${page.getNumber()} + ${iterationNum} == ${page.getNumber()}?'active':''">
+                <a th:text="${page.getNumber()} + ${iterationNum} + 1" th:if="${page.getNumber()} + ${iterationNum} >= 0 and ${page.getTotalPages()} > ${page.getNumber()} + ${iterationNum}" th:href="@{?(page=${page.getNumber()}+${iterationNum})}">页码</a>
+            </li>
+            <li class="jp-hidden" th:if="${page.getNumber()} +5 lt ${page.getTotalPages()}">
+                <span>...</span>
+            </li>
+            <li th:if="${page.hasNext()}">
+                <a class="jp-next jp-disabled" th:href="@{?(page=${page.getNumber()}+1)}">下一页</a>
+            </li>
+            <li th:classappend="!${page.hasNext()}?'disabled':''" th:if="${not page.hasNext()}">
+                <a class="jp-next jp-disabled" href="#" aria-label="Next">
+                    <span aria-hidden="true">下一页</span>
+                </a>
+            </li>
+            <li th:if="${page.hasNext()}">
+                <a th:href="@{?(page=${page.getTotalPages()}-1)}">尾页</a>
+            </li>
+            <li th:classappend="!${page.hasNext()}?'disabled':''" th:if="!${page.hasNext()}">
+                <a href="#">尾页</a>
+            </li>
+            <label th:text="'  共  '+${page.getTotalPages()}+'  页,  去第'" style="text-align: center; height: 34px; line-height: 34px; margin: 0px 10px;"></label>
+            <li>
+                <input type="text" size="2" class="pageNum" maxlength="5" th:value="${page.getNumber()}+1" />
+            </li>
+            <label th:text="'页'" style="text-align: center; height: 34px; line-height: 34px; margin: 0px 10px;"></label>
+            <li>
+                <button type="button" class="btn btn-default btn-sm getPageNum" th:text="确定"></button>
+            </li>
+            <span th:text="${page.getTotalPages()}" class="hidden totalPages"></span>
+        </ul>
+    </div>
+</div>
+<!-- 可以直接跳第XX页 -->
+<div th:fragment='pagination4(page)'>
+    <div th:if="${page.Content.size()}!=0" style="float: left;">
+        <ul class="pagination pagination-centered">
+            <li th:if="${page.hasPrevious()}">
+                <a th:href="@{?(page=0)}">首页</a>
+            </li>
+            <li th:classappend="!${page.hasPrevious()}?'disabled':''" th:if="!${page.hasPrevious()}">
+                <a href="#">首页</a>
+            </li>
+            <li th:classappend="!${page.hasPrevious()}?'disabled':''" th:if="${not page.hasPrevious()}">
+                <a class="jp-previous" aria-label="Previous">
+                    <span aria-hidden="true">上一页</span>
+                </a>
+            </li>
+            <li th:if="${page.hasPrevious()}">
+                <a class="jp-previous" th:href="@{?(page=${page.getNumber()-1})}">上一页</a>
+            </li>
+            <li class="jp-hidden" th:if="${page.getNumber()} -4 >0">
+                <span>...</span>
+            </li>
+            <li th:each="iterationNum : ${'-5,-4,-3,-2,-1,0,1,2,3,4,5'.split(',')}" th:classappend="${page.getNumber()} + ${iterationNum} == ${page.getNumber()}?'active':''">
+                <a th:text="${page.getNumber()} + ${iterationNum} + 1" th:if="${page.getNumber()} + ${iterationNum} >= 0 and ${page.getTotalPages()} > ${page.getNumber()} + ${iterationNum}" th:href="@{?(page=${page.getNumber()}+${iterationNum})}">页码</a>
+            </li>
+            <li class="jp-hidden" th:if="${page.getNumber()} +5 lt ${page.getTotalPages()}">
+                <span>...</span>
+            </li>
+            <li th:if="${page.hasNext()}">
+                <a class="jp-next jp-disabled" th:href="@{?(page=${page.getNumber()+1})}">下一页</a>
+            </li>
+            <li th:classappend="!${page.hasNext()}?'disabled':''" th:if="${not page.hasNext()}">
+                <a class="jp-next jp-disabled" href="#" aria-label="Next">
+                    <span aria-hidden="true">下一页</span>
+                </a>
+            </li>
+            <li th:if="${page.hasNext()}">
+                <a th:href="@{?(page=${page.getTotalPages()-1})}">尾页</a>
+            </li>
+            <li th:classappend="!${page.hasNext()}?'disabled':''" th:if="!${page.hasNext()}">
+                <a href="#">尾页</a>
+            </li>
+        </ul>
+    </div>
+    <div class="pager-form" th:if="${page.getTotalPages()}>0" style="width: 250px; float: left; margin-top: 24px;">
+        <b style="font-weight: normal">共 <span th:text="${page.getTotalPages()}"></span>页，去第
+        </b>
+        <input class="form-text lg" id="pageItem" type="text" size="4" />
+        <b style="font-weight: normal">页</b>
+        <button class="btn btn-primary" style="height: 30px; line-height: 15px; margin-top: -5px;" id="confirm" onclick="change();">确定</button>
+    </div>
+    <script type="text/javascript" th:inline="javascript">
+                    //点击确定时。拿页数，跳到要跳到的页码。
+                    function change() {
+                        var pageNum = $('#pageItem').val() - 1;
+                        /*<![CDATA[*/
+                        var totalPages = /*[[${page.getTotalPages()}]]*/null;
+                        var url = /*[[${url}]]*/null;
+                        var regExp = new RegExp("^\\d+$");
+                        var button = $('#confirm');
+                        if (regExp.test(pageNum)) {
+                            if ((pageNum >= 0) && (pageNum <= (totalPages - 1))) {
+                                button.attr('data-page', pageNum);
+                                button.attr('data-source', 'search');
+                                location.href = url + "?page=" + pageNum;
+                            } else {
+                                Csnsp.create_bootstarp_alert({
+                                    type : 'warning',
+                                    content : "页码超出范围！"
+                                });
+                            }
+                        } else {
+                            Csnsp.create_bootstarp_alert({
+                                type : 'warning',
+                                content : "输入了非法的页码！"
+                            });
+                        }
+                        /*]]>*/
+                    }
+                </script>
+</div>
+<!-- 可以直接跳第XX页异步分页 -->
+<div th:fragment='pagination5(page,path)'>
+    <div th:if="${page.Content.size()}!=0" style="float: left;">
+        <ul class="pagination pagination-centered">
+            <li th:if="${page.hasPrevious()}">
+                <a href="javascript:void(0);" onclick="clickpage(0)">首页</a>
+            </li>
+            <li th:classappend="!${page.hasPrevious()}?'disabled':''" th:if="!${page.hasPrevious()}">
+                <a href="#">首页</a>
+            </li>
+            <li th:classappend="!${page.hasPrevious()}?'disabled':''" th:if="${not page.hasPrevious()}">
+                <a class="jp-previous" aria-label="Previous">
+                    <span aria-hidden="true">上一页</span>
+                </a>
+            </li>
+            <li th:if="${page.hasPrevious()}">
+                <a class="jp-previous" href="javascript:void(0);" th:onclick="'clickpage('+ ${#numbers.formatInteger(page.getNumber()-1,1)} + ')'">上一页</a>
+            </li>
+            <li class="jp-hidden" th:if="${page.getNumber()} -4 >0">
+                <span>...</span>
+            </li>
+            <li th:each="iterationNum : ${#numbers.sequence(-5,5,1)}" th:classappend="${page.getNumber()} + ${iterationNum} == ${page.getNumber()}?'active':''">
+                <a href="javascript:void(0);" th:onclick="'clickpage('+ ${#numbers.formatInteger(page.getNumber()+iterationNum,1)} + ')'" th:text="${page.getNumber()} + ${iterationNum} + 1" th:if="${page.getNumber()} + ${iterationNum} >= 0 and ${page.getTotalPages()} > ${page.getNumber()} + ${iterationNum}">2</a>
+            </li>
+            <li class="jp-hidden" th:if="${page.getNumber()} +5 lt ${page.getTotalPages()}">
+                <span>...</span>
+            </li>
+            <li th:if="${page.hasNext()}">
+                <a class="jp-next jp-disabled"  href="javascript:void(0);" th:onclick="'clickpage('+ ${#numbers.formatInteger(page.getNumber()+1,1)} + ')'">下一页</a>
+            </li>
+            <li th:classappend="!${page.hasNext()}?'disabled':''" th:if="${not page.hasNext()}">
+                <a class="jp-next jp-disabled" href="#" aria-label="Next">
+                    <span aria-hidden="true">下一页</span>
+                </a>
+            </li>
+            <li th:if="${page.hasNext()}">
+                <a href="javascript:void(0);" th:onclick="'clickpage('+ ${#numbers.formatInteger(page.getTotalPages()-1,1)} + ')'">尾页</a>
+            </li>
+            <li th:classappend="!${page.hasNext()}?'disabled':''" th:if="!${page.hasNext()}">
+                <a href="#">尾页</a>
+            </li>
+        </ul>
+    </div>
+    <div class="pager-form" th:if="${page.getTotalPages()}>0" style="width: 250px; float: left; margin-top: 24px;">
+        <b style="font-weight: normal">共 <span th:text="${page.getTotalPages()}"></span>页，去第
+        </b>
+        <input class="form-text lg" id="pageItem" type="text" size="4" placeholder=""/>
+        <b style="font-weight: normal">页</b>
+        <button class="btn btn-primary" style="height: 30px; line-height: 15px; margin-top: -5px;" id="confirm" onclick="changepage();">确定</button>
+    </div>
+    <script type="text/javascript" th:inline="javascript">
+                    function clickpage(pageNum) {
+                        var url = /*[[${path}]]*/;
+                        url = url+ '?page='+ pageNum;
+                        $('#list-show').load(url,{type:'post'});
+                    }
+                    function changepage() {
+                        var targetPage = $('#pageItem').val() - 1;
+                        /*<![CDATA[*/
+                        var totalPage = /*[[${page.getTotalPages()}]]*/null;
+                        var url = /*[[${path}]]*/;
+                        var regExp = new RegExp("^\\d+$");
+                        var button = $('#confirm');
+                        if (regExp.test(targetPage)) {
+                            if ((targetPage >= 0) && (targetPage <= (totalPage - 1))) {
+                                button.attr('data-page', targetPage);
+                                button.attr('data-source', 'search');
+                                url = url + "?page=" + targetPage;
+                                $('#list-show').load(url,{type:'post'});
+                            } else {
+                                Csnsp.create_bootstarp_alert({
+                                    type : 'warning',
+                                    content : "页码超出范围！"
+                                });
+                            }
+                        } else {
+                            Csnsp.create_bootstarp_alert({
+                                type : 'warning',
+                                content : "输入了非法的页码！"
+                            });
+                        }
+                        /*]]>*/
+                    }
+                </script>
+</div>

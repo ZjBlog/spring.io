@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template/head::head">
+<title>Getting Started: Serving Web Content</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <div th:replace="template/navbar::navbar"></div>
+    <div class="container">
+        <p class="text-center" style="margin-top:50px;">这是云校最小系统,从"空间"项目删减而来...</p>
+        <shiro:notAuthenticated>
+            <ul class="text-center">
+                <li>如果您已经拥有云校账号,请点击:
+                    <a href="#" th:href="@{/login}">登录</a>
+                </li>
+            </ul>
+        </shiro:notAuthenticated>
+    </div>
+    <!-- Footer -->
+    <div th:replace="template/footer::div.footer"></div>
+</body>
+</html>
