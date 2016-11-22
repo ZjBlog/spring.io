@@ -16,7 +16,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <!--分隔符 默认@  @   改成${*}  配置文件中的会被替换掉-->
+        <!--分隔符 默认@ @ 改成${*} 配置文件中的会被替换掉 -->
         <resource.delimiter>${*}</resource.delimiter>
     </properties>
 

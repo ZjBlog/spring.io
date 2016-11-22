@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template/head::head">
+<title>Getting Started: Serving Web Content</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<style type="text/css">
+body .container {
+    height: 100%;
+}
+</style>
+<body style="font-family: '微软雅黑';">
+    <!--NavBar-->
+    <div th:replace="template/navbar::navbar"></div>
+    <!-- Begin page content -->
+    <div class="container">
+        <div class="row" style="margin-top: 50px;">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-5">
+                <div class="panel login">
+                    <div class="panel-heading text-center">
+                        <h4>登录/Login</h4>
+                    </div>
+                    <div class="panel-body">
+                        <form id="login-form" method="post" action="/login">
+                            <input name="loginType" type="hidden" id="loginType" value="member" />
+                            <div class="form-group">
+                                <input class="form-control" name="username" type="input" id="mobile" placeholder="手机" required="" th:value="${login_fail_review_username}" />
+                                <span id="mobile-register" style="font-size: 12px; color: red;"></span>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="password" type="password" id="password" placeholder="密码" required="" />
+                                <span id="password-register" style="font-size: 12px; color: red;"></span>
+                            </div>
+                            <div class="checkbox">
+                                <label style="float: left">
+                                    <input type="checkbox" id="remember" name="rememberMe" value="true" />
+                                    <span style="color: #959595;">下次自动登录</span>
+                                </label>
+                                <a class="btn btn-link col-xs-4" style="float: right; margin-top: -5px; text-align: right; color: #959595;" href="/register/forget/password.html">忘记密码</a>
+                            </div>
+                            <button type="submit" id="click-login" style="font-size: 16px; margin-bottom: 10px;" class="btn btn-warning col-xs-12">
+                                <span>登录</span>
+                            </button>
+                        </form>
+                        <div class="text-center" style="clear: both;">
+                            还没有注册账号？
+                            <a href="/register/index.html">
+                                <i class="glyphicon glyphicon-circle-arrow-right"></i>立即注册
+                            </a>
+                        </div>
+                        <div>
+                            <span id="login-status" th:attr="login_status=${login_status}"></span> <span id="login_error_msg" th:attr="login_error_msg=${login_error_msg}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-3"></div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <script type="text/javascript">
+                    seajs.use(['canvas'],function(canvas){
+                        
+                    })
+                </script>
+</body>
+</html>
