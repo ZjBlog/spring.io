@@ -7,7 +7,6 @@ import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.RememberMeManager;
 import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.realm.text.IniRealm;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
@@ -56,10 +55,11 @@ public class ShiroDbConfig {
     @Bean
     SecurityManager securityManager() {
         DefaultSecurityManager manager = new DefaultWebSecurityManager();
-        manager.setRealm(new IniRealm());
         manager.setSessionManager(sessionManager());
         manager.setRememberMeManager(rememberMeManager());
-        manager.setRealm(new ShiroDbRealm());
+        ShiroDbRealm shiroDbRealm = new ShiroDbRealm();
+        // shiroDbRealm.setAuthorizationCacheName(authorizationCacheName);
+        manager.setRealm(shiroDbRealm);
         manager.setCacheManager(new EhCacheManager());
         return manager;
     }

@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template/head::head">
+<title>Getting Started: Serving Web Content</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body style="font-family: '微软雅黑';">
+    <!--NavBar-->
+     <div th:replace="template/navbar::navbar"></div>
+    <!-- Begin page content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-3" id="box-left"></div>
+            <div class="col-xs-5 ce" id="box-center">
+                <div class="panel">
+                    <div class="panel-heading text-center">
+                        <h4>注册/Register</h4>
+                    </div>
+                    <div class="panel-body">
+                        <form class="form-horizontal" method="post" onsubmit="return false;">
+                            <div class="form-group register-mobile">
+                                <div class="col-sm-12">
+                                    <input class="form-control" name="mobile" placeholder="手机" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <input class="form-control" name="password" type="password" placeholder="密码" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <input class="form-control" name="password" type="password" placeholder="密码确认" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div id="drag"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-1">
+                                    <input type="checkbox" checked="checked" />
+                                </div>
+                                <span>我已阅读并同意遵守本网站条款</span>
+                                <a href="#" target="_blank">《本站条款》</a>
+                                <div class="col-xs-12"></div>
+                            </div>
+                            <button type="submit" class="btn btn-warning col-xs-12">
+                                <span>注册</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+                    seajs.use('/assets/css/drag.css');
+                    seajs.use([ '/assets/js/plugins/drag' ], function(drag) {
+                        $('#drag').drag();
+                    });
+                </script>
+    <!-- Footer -->
+    <div th:replace="template/footer::div.footer"></div>
+</body>
+</html>

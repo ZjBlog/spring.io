@@ -16,12 +16,38 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse nav-li" style="height: 30px !important;">
             <ul class="nav navbar-nav navbar-right" style="height: 30px !important;">
-                <li>
-                    <a href="#" th:href="@{/login}">登录</a>
-                </li>
-                <li>
-                    <a href="#" th:href="@{/register}">注册</a>
-                </li>
+                <shiro:authenticated>
+                    <li>
+                        <a href="#" th:href="@{/login}">
+                            你好,
+                            <shiro:principal property="mobile" />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" th:href="@{/logout}">退出</a>
+                    </li>
+                </shiro:authenticated>
+                <shiro:notAuthenticated>
+                    <shiro:user>
+                        <li>
+                            <a href="#" th:href="@{/login}">
+                                你好,
+                                <shiro:principal property="mobile" />
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" th:href="@{/logout}">退出</a>
+                        </li>
+                    </shiro:user>
+                    <shiro:guest>
+                        <li>
+                            <a href="#" th:href="@{/login}">登录</a>
+                        </li>
+                        <li>
+                            <a href="#" th:href="@{/register/index}">注册</a>
+                        </li>
+                    </shiro:guest>
+                </shiro:notAuthenticated>
             </ul>
         </div>
         <!--/.nav-collapse -->

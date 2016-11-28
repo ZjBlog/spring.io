@@ -32,6 +32,10 @@ public class ShiroBasConfig {
         map.put("/logout", "logout");
         // authc
 
+        // user 即记住我功能 就可以使用
+        map.put("/home", "user");
+        // 必须是本人 比如 钱包 订单等情况
+        map.put("/personal", "authc");
         map.put("/**", "anon");
         return map;
     }

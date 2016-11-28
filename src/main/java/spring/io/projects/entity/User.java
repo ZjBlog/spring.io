@@ -26,6 +26,17 @@ public class User extends BaseEntity {
     @Column(length = 32, unique = true)
     private String email;
 
+    @Column
+    private String passWord;
+
+    public String getPassWord() {
+        return passWord;
+    }
+
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
+    }
+
     public String getName() {
         return name;
     }

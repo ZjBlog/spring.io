@@ -7,7 +7,7 @@
 <body>
     <div th:replace="template/navbar::navbar"></div>
     <div class="container">
-        <p class="text-center" style="margin-top: 50px;">欢迎来到coding home</p>
+        <p class="text-center" style="margin-top: 50px;">欢迎来到coding home,<shiro:principal property="mobile" /></p>
     </div>
     <!-- Footer -->
     <div th:replace="template/footer::div.footer"></div>

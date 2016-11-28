@@ -7,7 +7,7 @@ seajs.config({
         "plupload" : "//cdn.bootcss.com/plupload/2.1.8/plupload.full.min.js",
         "vue" : "//cdn.bootcss.com/vue/2.0.7/vue.js",
         "canvas":"//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js",
-        "partic":"//cdn.uedsc.com/particleground/1.1.0/jquery.particleground.js"
+        "router":"//cdn.bootcss.com/vue-router/2.0.3/vue-router.min.js"
     },
     preload : [ 'jquery' ]
 })

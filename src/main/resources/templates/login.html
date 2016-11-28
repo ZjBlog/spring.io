@@ -22,22 +22,21 @@ body .container {
                         <h4>登录/Login</h4>
                     </div>
                     <div class="panel-body">
-                        <form id="login-form" method="post" action="/login">
-                            <input name="loginType" type="hidden" id="loginType" value="member" />
+                        <form  method="post" action="/login">
                             <div class="form-group">
-                                <input class="form-control" name="username" type="input" id="mobile" placeholder="手机" required="" th:value="${login_fail_review_username}" />
+                                <input class="form-control" name="username" type="input" id="mobile" placeholder="手机"  th:value="${login_fail_review_username}" autofocus="autofocus" />
                                 <span id="mobile-register" style="font-size: 12px; color: red;"></span>
                             </div>
                             <div class="form-group">
-                                <input class="form-control" name="password" type="password" id="password" placeholder="密码" required="" />
+                                <input class="form-control" name="password" type="password" id="password" placeholder="密码"  />
                                 <span id="password-register" style="font-size: 12px; color: red;"></span>
                             </div>
                             <div class="checkbox">
                                 <label style="float: left">
-                                    <input type="checkbox" id="remember" name="rememberMe" value="true" />
+                                    <input type="checkbox" id="remember" name="rememberMe" value="true" checked="checked" />
                                     <span style="color: #959595;">下次自动登录</span>
                                 </label>
-                                <a class="btn btn-link col-xs-4" style="float: right; margin-top: -5px; text-align: right; color: #959595;" href="/register/forget/password.html">忘记密码</a>
+                                <a class="btn btn-link col-xs-4" style="float: right; margin-top: -5px; text-align: right; color: #959595;" href="#">忘记密码</a>
                             </div>
                             <button type="submit" id="click-login" style="font-size: 16px; margin-bottom: 10px;" class="btn btn-warning col-xs-12">
                                 <span>登录</span>
@@ -45,7 +44,7 @@ body .container {
                         </form>
                         <div class="text-center" style="clear: both;">
                             还没有注册账号？
-                            <a href="/register/index.html">
+                            <a href="/register">
                                 <i class="glyphicon glyphicon-circle-arrow-right"></i>立即注册
                             </a>
                         </div>
@@ -60,8 +59,28 @@ body .container {
     </div>
     <!-- Footer -->
     <script type="text/javascript">
-                    seajs.use(['canvas'],function(canvas){
+                    seajs.use([ 'canvas', 'loginAndRegister/main' ], function(canvas, user) {
                         
+                        //登录成功校验
+                        user.loginSuccessVerification();
+
+                        //验证手机号
+                        $('#mobile').blur(function() {
+                            user.mobileVerification();
+                        });
+
+                        //验证密码
+                        $('#password').blur(function() {
+                            user.passwordVerification();
+                        });
+
+                        //登录 之前验证一下 form表单提交  返回false是不会提交的
+                        $('#click-login').on('click', function() {
+                            var status = user.login();
+                            //表单提交
+                            return status;
+                        });
+
                     })
                 </script>
 </body>
