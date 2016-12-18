@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import spring.io.projects.annotation.Auth;
+
 /**
  * 首页
  * 
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
+    @Auth
     @GetMapping(value = { "/", "/index", "/index.html" })
     public String index(Model model) {
 
