@@ -36,7 +36,6 @@ public class LoginController {
      */
     @GetMapping(value = "/login")
     public String loginViw() {
-
         if (SecurityUtils.getSubject().isAuthenticated()) {
             LOGGER.debug("已经登录了");
             return "redirect:/index";
